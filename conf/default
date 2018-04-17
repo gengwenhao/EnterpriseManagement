@@ -1,0 +1,25 @@
+server {
+    listen      80;
+    server_name localhost;
+    charset    utf-8;
+
+    client_max_body_size 75M;
+
+    location /static {
+        alias /home/sites/EnterpriseManagement/static/;
+    }
+
+    location /media {
+        autoindex on;
+        alias /home/sites/EnterpriseManagement/media/;
+    }
+
+    location / {
+        uwsgi_pass 127.0.0.1:8489;
+        include uwsgi_params;
+    }
+
+}
+
+
+

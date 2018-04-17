@@ -1,0 +1,38 @@
+[[source]]
+
+url = "https://pypi.douban.com/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+django = "*"
+pillow = "*"
+pymysql = "*"
+future = "*"
+django-crispy-forms = "*"
+django-formtools = "*"
+"httplib2" = "*"
+requests = "*"
+mysqlclient = "*"
+djangorestframework-jwt = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+django-reversion = "*"
+coreapi = "*"
+django-cors-headers = "*"
+xlwt = "*"
+xlsxwriter = "*"
+drf-extensions = "*"
+django-redis = "*"
+pycryptodome = "*"
+raven = "*"
+six = "*"
+django-import-export = "*"
+django-guardian = "*"
+
+
+[dev-packages]
+
