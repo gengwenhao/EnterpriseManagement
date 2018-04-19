@@ -35,7 +35,7 @@ class UserProfile(AbstractUser):
     )
     gender = models.CharField(max_length=6, choices=gender_choices, default='male', verbose_name='性别')
     mobile = models.CharField(max_length=11, verbose_name='电话')
-    email = models.EmailField(max_length=100, unique=True, null=True, blank=True, verbose_name='邮箱')
+    email = models.EmailField(max_length=100, null=True, blank=True, verbose_name='邮箱')
     user_type = models.ForeignKey(UserType, null=True, blank=True, on_delete=models.CASCADE, verbose_name='用户权限')
     user_orgs = models.ManyToManyField(OrgProfile, verbose_name='用户所属机构')
 
