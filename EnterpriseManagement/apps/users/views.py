@@ -5,14 +5,17 @@ from django.contrib.auth import login
 from django.http import HttpResponse
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, status
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
 from users.filters import UserProfileFilter
 from users.models import UserProfile
-from users.serializers import UserProfileSerializer
+from users.serializers import UserProfileSerializer, RegisterSerializer, MessageSerializer
 
 
 class LogoutView(View):
@@ -44,6 +47,39 @@ class LoginView(View):
 
         response = HttpResponse(json.dumps(return_data), content_type='application/json')
         return response
+
+
+class RegisterViewset(CreateModelMixin,
+                      viewsets.GenericViewSet):
+    """
+        用户注册
+    """
+    serializer_class = RegisterSerializer
+    queryset = UserProfile.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create(serializer)
+
+        re_dict = serializer.data
+        payload = jwt_payload_handler(user)
+        re_dict["token"] = jwt_encode_handler(payload)
+        re_dict["username"] = user.name if user.name else user.username
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+
+class MessageViewset(CreateModelMixin,
+                     viewsets.GenericViewSet):
+    """
+        用户留言
+    """
+    serializer_class = MessageSerializer
 
 
 class UserProfilePagination(PageNumberPagination):

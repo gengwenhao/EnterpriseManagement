@@ -17,14 +17,21 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from rest_framework import routers
+from rest_framework_jwt.views import obtain_jwt_token
 
 import xadmin
 from orgs.views import OrgProfileViewSet
-from users.views import UserProfileViewSet
+from users.views import (
+    UserProfileViewSet,
+    RegisterViewset,
+    MessageViewset
+)
 
 router = routers.DefaultRouter()
 router.register('org_profile', OrgProfileViewSet, base_name='org_profile')
 router.register('user_profile', UserProfileViewSet, base_name='user_profile')
+router.register('message_profile', MessageViewset, base_name='user_profile')
+router.register('register', RegisterViewset, base_name='register')
 
 urlpatterns = [
     # admin
@@ -34,6 +41,7 @@ urlpatterns = [
     # rest-framework
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+    path('login/', obtain_jwt_token),
 
     # api
     path('api/', include('api.urls', namespace='api'))

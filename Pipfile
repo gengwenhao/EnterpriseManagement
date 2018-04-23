@@ -32,6 +32,7 @@ raven = "*"
 six = "*"
 django-import-export = "*"
 django-guardian = "*"
+pip = "*"
 
 
 [dev-packages]

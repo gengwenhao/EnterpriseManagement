@@ -37,7 +37,7 @@ class UserInfo(View):
         all_orgs_count_month = OrgProfile.new_orgs_month().count()
 
         # 用户留言
-        user_message = Message.objects.all().order_by('-id')[:10]
+        user_message = Message.objects.all().order_by('-id')[:7]
         user_message = [{
             'name': msg.user.username,
             'content': msg.content,
