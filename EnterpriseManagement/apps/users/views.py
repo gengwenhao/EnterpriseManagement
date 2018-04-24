@@ -93,7 +93,8 @@ class UserProfilePagination(PageNumberPagination):
 
 
 class UserProfileViewSet(mixins.ListModelMixin,
-                         viewsets.GenericViewSet):
+                         viewsets.GenericViewSet,
+                         mixins.RetrieveModelMixin):
     """
     list:
         用户列表页

@@ -30,7 +30,7 @@ from users.views import (
 router = routers.DefaultRouter()
 router.register('org_profile', OrgProfileViewSet, base_name='org_profile')
 router.register('user_profile', UserProfileViewSet, base_name='user_profile')
-router.register('message_profile', MessageViewset, base_name='user_profile')
+router.register('message_profile', MessageViewset, base_name='message_profile')
 router.register('register', RegisterViewset, base_name='register')
 
 urlpatterns = [
