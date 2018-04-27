@@ -78,12 +78,14 @@ class MessageViewset(CreateModelMixin,
         用户留言
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # permission_classes = (IsOwnerOrReadOnly,)
     serializer_class = MessageSerializer
     pagination_class = MessagePagination
 
     def get_queryset(self):
-        return Message.objects.filter(user=self.request.user)
+        # return Message.objects.filter(user=self.request.user)
+        return Message.objects.all()
 
 
 class UserProfileViewSet(mixins.ListModelMixin,
