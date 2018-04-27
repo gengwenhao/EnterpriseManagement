@@ -1,7 +1,14 @@
+"""
+    用户信息, 注册序列化
+"""
+import time
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import UserProfile, Message
+from users.models import (
+    UserProfile,
+    Message
+)
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -15,6 +22,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+        注册序列化
+    """
     username = serializers.CharField(required=True, allow_blank=False,
                                      validators=[UniqueValidator(queryset=UserProfile.objects.all(), message='用户已存在')])
     password = serializers.CharField(
@@ -29,6 +39,30 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    """
+        用户留言序列化
+    """
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    name = serializers.SerializerMethodField()
+    time = serializers.SerializerMethodField()
+
     class Meta:
         model = Message
-        fields = ('content', 'user')
+        fields = ('content', 'user', 'name', 'id', 'time')
+
+    def get_time(self, instance):
+        data_time = str(instance.add_time) \
+            .split('.')[0] \
+            .split(' ')
+
+        date_time_dict = dict(
+            date=data_time[0],
+            time=data_time[1],
+        )
+
+        return date_time_dict
+
+    def get_name(self, instance):
+        return str(instance.user)
