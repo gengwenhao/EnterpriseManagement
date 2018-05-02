@@ -42,9 +42,9 @@ class MessageSerializer(serializers.ModelSerializer):
     """
         用户留言序列化
     """
-    # user = serializers.HiddenField(
-    #     default=serializers.CurrentUserDefault()
-    # )
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
     name = serializers.SerializerMethodField()
     time = serializers.SerializerMethodField()
 

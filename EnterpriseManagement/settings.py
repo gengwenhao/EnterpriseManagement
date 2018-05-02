@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
+import datetime
 import os
 import sys
 
@@ -29,19 +29,31 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# 允许非同源访问
+CORS_ORIGIN_ALLOW_ALL = True
+
 # Application definition
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-#     ),
-# }
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # DRF-JWT
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
+# JWT用户验证配置
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -61,6 +73,7 @@ INSTALLED_APPS = [
     # plugins
     'django_filters',
     'rest_framework',
+    'rest_framework_jwt',
     'crispy_forms',
     'corsheaders',
 

@@ -10,7 +10,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import (jwt_encode_handler,
@@ -77,15 +77,16 @@ class MessageViewset(CreateModelMixin,
     """
         用户留言
     """
-    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
-    # permission_classes = (IsOwnerOrReadOnly,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication,)
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
+    permission_classes = (AllowAny,)
     serializer_class = MessageSerializer
     pagination_class = MessagePagination
+    lookup_field = 'user_id'
 
     def get_queryset(self):
-        # return Message.objects.filter(user=self.request.user)
-        return Message.objects.all()
+        return Message.objects.filter(user=self.request.user).order_by('-add_time')
+        # return Message.objects.all()
 
 
 class UserProfileViewSet(mixins.ListModelMixin,
