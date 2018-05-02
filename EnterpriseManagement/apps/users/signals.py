@@ -9,6 +9,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         password = instance.password
         # 如果是jwt方式注册, 密码会比较短
-        if len(str(password)) < 70:
+        if not str(password).startswith('pbkdf2_sha256'):
             instance.set_password(password)
             instance.save()
