@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     # models
     'users.apps.UsersConfig',
     'orgs.apps.OrgsConfig',
+    'user_operation.apps.UserOperationConfig',
 
     # tools
     'cmd_tools',

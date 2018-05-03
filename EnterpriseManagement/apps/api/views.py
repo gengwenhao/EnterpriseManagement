@@ -1,3 +1,6 @@
+"""
+    自定义接口
+"""
 import json
 
 from django.http import JsonResponse, HttpResponse
@@ -9,6 +12,9 @@ from users.models import UserProfile, Message
 
 
 class UserInfo(View):
+    """
+        用户信息
+    """
     def get(self, request):
         # 人数统计
         all_orgs = OrgProfile.objects.all()[:10]
@@ -58,6 +64,9 @@ class UserInfo(View):
 
 
 def format_add_time(add_time):
+    """
+        格式化时间
+    """
     return '{}-{}-{}'.format(
         add_time.year,
         add_time.month,
@@ -66,6 +75,9 @@ def format_add_time(add_time):
 
 
 class OrgInfo(View):
+    """
+        机构信息
+    """
     def get(self, request):
         all_orgs_list = OrgProfile.objects.all()
         org_info_list = [{
@@ -81,21 +93,3 @@ class OrgInfo(View):
         }, ensure_ascii=False)
 
         return HttpResponse(json_result, content_type='application/json')
-
-
-class UpdateUserPassword(View):
-    def post(self, request):
-        password = request.POST.get('password', None)
-        if password is not None:
-            pass
-
-        return HttpResponse('{status: "successed"}', content_type='application/json')
-
-
-class GoodsList(View):
-    def get(self, request):
-        data_path = r'C:\Users\Administrator\Desktop\z1b8jp\mock\goods.json'
-        with open(data_path, encoding='utf8', mode='r') as f:
-            json_data = f.read()
-
-        return HttpResponse(json_data, content_type='application/json')

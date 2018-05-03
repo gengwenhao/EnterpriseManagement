@@ -21,6 +21,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 import xadmin
 from orgs.views import OrgProfileViewSet
+from user_operation.views import BoardViewset
 from users.views import (
     UserProfileViewSet,
     RegisterViewset,
@@ -32,6 +33,7 @@ router.register('org_profile', OrgProfileViewSet, base_name='org_profile')
 router.register('user_profile', UserProfileViewSet, base_name='user_profile')
 router.register('message_profile', MessageViewset, base_name='message_profile')
 router.register('register', RegisterViewset, base_name='register')
+router.register('board', BoardViewset, base_name='board')
 
 urlpatterns = [
     # admin

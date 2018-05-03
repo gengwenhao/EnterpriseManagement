@@ -22,7 +22,6 @@ from users.models import (UserProfile,
 from users.serializers import (UserProfileSerializer,
                                RegisterSerializer,
                                MessageSerializer)
-from utils.permission import IsOwnerOrReadOnly
 
 
 class RegisterViewset(CreateModelMixin,
@@ -79,13 +78,13 @@ class MessageViewset(CreateModelMixin,
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication,)
     # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
-    permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)
     serializer_class = MessageSerializer
     pagination_class = MessagePagination
-    lookup_field = 'user_id'
+    # lookup_field = 'user_id'
 
     def get_queryset(self):
-        return Message.objects.filter(user=self.request.user).order_by('-add_time')
+        return Message.objects.filter(user_id=self.request.user)
         # return Message.objects.all()
 
 

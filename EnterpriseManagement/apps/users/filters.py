@@ -7,7 +7,7 @@ from users.models import UserProfile
 
 class UserProfileFilter(FilterSet):
     """
-        商品过滤类
+        用户过滤类
     """
     min_date_joined = django_filters.NumberFilter(name="date_joined", lookup_expr='gte')
     max_date_joined = django_filters.NumberFilter(name="date_joined", lookup_expr='lte')
@@ -23,5 +23,4 @@ class UserProfileFilter(FilterSet):
 
     class Meta:
         model = UserProfile
-
         fields = ['min_date_joined', 'max_date_joined']

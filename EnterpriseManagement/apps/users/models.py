@@ -72,7 +72,7 @@ class Message(models.Model):
         用户留言
     """
     content = models.CharField(max_length=250, verbose_name='留言内容')
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='留言用户')
+    user = models.ForeignKey(UserProfile, on_delete=models.DO_NOTHING, verbose_name='留言用户')
     add_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -81,3 +81,4 @@ class Message(models.Model):
     class Meta:
         verbose_name = '用户留言'
         verbose_name_plural = verbose_name
+        ordering = ['-add_time']

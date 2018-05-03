@@ -1,7 +1,6 @@
 """
     用户信息, 注册序列化
 """
-import time
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
