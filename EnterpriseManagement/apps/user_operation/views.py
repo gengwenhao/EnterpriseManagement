@@ -34,11 +34,6 @@ class BoardViewset(CreateModelMixin,
     serializer_class = BoardSerializers
     pagination_class = BoardPagination
 
-    # filter_backends = (
-    #     DjangoFilterBackend,
-    # )
-    # filter_class = BoardFilter
-
     def get_queryset(self):
         user_id = self.request.user.id
 
