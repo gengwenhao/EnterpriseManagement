@@ -17,23 +17,25 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token
 
 import xadmin
 from orgs.views import OrgProfileViewSet
-from user_operation.views import BoardViewset
+from user_operation.views import BoardViewSet
 from users.views import (
     UserProfileViewSet,
-    RegisterViewset,
-    MessageViewset
-)
+    RegisterViewSet,
+    MessageViewSet,
+    ChangePasswordViewSet)
 
 router = routers.DefaultRouter()
 router.register('org_profile', OrgProfileViewSet, base_name='org_profile')
 router.register('user_profile', UserProfileViewSet, base_name='user_profile')
-router.register('message_profile', MessageViewset, base_name='message_profile')
-router.register('register', RegisterViewset, base_name='register')
-router.register('board', BoardViewset, base_name='board')
+router.register('change_password', ChangePasswordViewSet, base_name='change_password')
+router.register('message_profile', MessageViewSet, base_name='message_profile')
+router.register('register', RegisterViewSet, base_name='register')
+router.register('board', BoardViewSet, base_name='board')
 
 urlpatterns = [
     # admin
@@ -42,8 +44,9 @@ urlpatterns = [
 
     # rest-framework
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls')),
     path('login/', obtain_jwt_token),
+    path('docs/', include_docs_urls(title='企业会议系统')),
+    path('api-auth/', include('rest_framework.urls')),
 
     # api
     path('api/', include('api.urls', namespace='api'))

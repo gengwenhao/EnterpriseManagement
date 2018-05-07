@@ -37,6 +37,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password')
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    new_password = serializers.CharField(required=True)
+
+
+
 class MessageSerializer(serializers.ModelSerializer):
     """
         用户留言序列化

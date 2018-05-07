@@ -16,13 +16,13 @@ class BoardPagination(PageNumberPagination):
     """
         留言分页
     """
-    page_size = 10
+    page_size = 4
     page_size_query_param = 'page_size'
     page_query_param = 'page'
     max_page_size = 50
 
 
-class BoardViewset(CreateModelMixin,
+class BoardViewSet(CreateModelMixin,
                    mixins.ListModelMixin,
                    viewsets.GenericViewSet,
                    mixins.DestroyModelMixin,

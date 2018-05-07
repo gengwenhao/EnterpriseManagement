@@ -10,7 +10,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import (jwt_encode_handler,
@@ -21,10 +21,10 @@ from users.models import (UserProfile,
                           Message)
 from users.serializers import (UserProfileSerializer,
                                RegisterSerializer,
-                               MessageSerializer)
+                               MessageSerializer, ChangePasswordSerializer)
 
 
-class RegisterViewset(CreateModelMixin,
+class RegisterViewSet(CreateModelMixin,
                       viewsets.GenericViewSet):
     """
         用户注册
@@ -69,7 +69,7 @@ class MessagePagination(PageNumberPagination):
     max_page_size = 50
 
 
-class MessageViewset(CreateModelMixin,
+class MessageViewSet(CreateModelMixin,
                      mixins.ListModelMixin,
                      viewsets.GenericViewSet,
                      mixins.DestroyModelMixin):
@@ -81,6 +81,7 @@ class MessageViewset(CreateModelMixin,
     # permission_classes = (AllowAny,)
     serializer_class = MessageSerializer
     pagination_class = MessagePagination
+
     # lookup_field = 'user_id'
 
     def get_queryset(self):
@@ -90,6 +91,7 @@ class MessageViewset(CreateModelMixin,
 
 class UserProfileViewSet(mixins.ListModelMixin,
                          viewsets.GenericViewSet,
+                         mixins.UpdateModelMixin,
                          mixins.RetrieveModelMixin):
     """
         用户列表
@@ -106,3 +108,29 @@ class UserProfileViewSet(mixins.ListModelMixin,
     filter_class = UserProfileFilter
     search_fields = ('name', 'email',)
     ordering_fields = ('date_joined',)
+
+
+class ChangePasswordViewSet(viewsets.GenericViewSet,
+                            mixins.UpdateModelMixin):
+    """
+    An endpoint for changing password.
+    """
+    serializer_class = ChangePasswordSerializer
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication,)
+    model = UserProfile
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response("Success.", status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
