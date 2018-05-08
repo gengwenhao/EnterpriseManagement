@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.views.generic import TemplateView
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token
@@ -39,11 +40,13 @@ router.register('board', BoardViewSet, base_name='board')
 
 urlpatterns = [
     # admin
-    path('admin/', admin.site.urls),
-    path('xadmin/', xadmin.site.urls),
+    # path('admin/', admin.site.urls),
+    path('admin/', xadmin.site.urls),
+
+    path('', TemplateView.as_view(template_name='index.html')),
 
     # rest-framework
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
     path('login/', obtain_jwt_token),
     path('docs/', include_docs_urls(title='企业会议系统')),
     path('api-auth/', include('rest_framework.urls')),
