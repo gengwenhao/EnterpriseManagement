@@ -46,7 +46,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
 
     # rest-framework
-    # path('', include(router.urls)),
+    path('', include(router.urls)),
     path('login/', obtain_jwt_token),
     path('docs/', include_docs_urls(title='企业会议系统')),
     path('api-auth/', include('rest_framework.urls')),

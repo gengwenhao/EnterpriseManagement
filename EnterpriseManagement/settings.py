@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'EnterpriseManagement', 'extra_apps'))
 SECRET_KEY = '%uzjveyc^n3$v=gwcj2q(39^c(7se4%7%8m*a-o&0e451s#%@7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -187,5 +187,5 @@ else:
         'NAME': 'EnterpriseManagementDB',
         'USER': 'root',
         'PASSWORD': '13945657337xX',
-        'HOST': '192.168.33.10',
+        'HOST': 'localhost',
     })
