@@ -1,21 +1,21 @@
 server {
     listen      80;
-    server_name localhost;
+    server_name em.gengwenhao.com;
     charset    utf-8;
 
     client_max_body_size 75M;
 
     location /static {
-        alias /home/sites/EnterpriseManagement/static/;
+        alias /home/sites/em.gengwenhao.com/EnterpriseManagement/static/;
     }
 
     location /media {
         autoindex on;
-        alias /home/sites/EnterpriseManagement/media/;
+        alias /home/sites/em.gengwenhao.com/EnterpriseManagement/media/;
     }
 
     location / {
-        uwsgi_pass 127.0.0.1:8489;
+        uwsgi_pass 127.0.0.1:8000;
         include uwsgi_params;
     }
 

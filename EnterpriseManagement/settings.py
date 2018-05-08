@@ -187,5 +187,5 @@ else:
         'NAME': 'EnterpriseManagementDB',
         'USER': 'root',
         'PASSWORD': '13945657337xX',
-        'HOST': '192.168.33.10',
+        'HOST': 'localhost',
     })
