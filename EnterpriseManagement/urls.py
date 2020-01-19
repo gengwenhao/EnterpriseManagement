@@ -1,7 +1,7 @@
 """EnterpriseManagement URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.views.generic import TemplateView
@@ -31,12 +30,12 @@ from users.views import (
     ChangePasswordViewSet)
 
 router = routers.DefaultRouter()
-router.register('org_profile', OrgProfileViewSet, base_name='org_profile')
-router.register('user_profile', UserProfileViewSet, base_name='user_profile')
-router.register('change_password', ChangePasswordViewSet, base_name='change_password')
-router.register('message_profile', MessageViewSet, base_name='message_profile')
-router.register('register', RegisterViewSet, base_name='register')
-router.register('board', BoardViewSet, base_name='board')
+router.register('org_profile', OrgProfileViewSet, basename='org_profile')
+router.register('user_profile', UserProfileViewSet, basename='user_profile')
+router.register('change_password', ChangePasswordViewSet, basename='change_password')
+router.register('message_profile', MessageViewSet, basename='message_profile')
+router.register('register', RegisterViewSet, basename='register')
+router.register('board', BoardViewSet, basename='board')
 
 urlpatterns = [
     # admin

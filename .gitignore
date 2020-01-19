@@ -1,6 +1,8 @@
+.idea/
+venv/
+
 # ---> Python
 # Byte-compiled / optimized / DLL files
-.idea
 db.sqlite3
 __pycache__/
 *.py[cod]
